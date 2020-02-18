@@ -48,7 +48,7 @@ spaceyBoi.start();
         <tr>
             <td><code>bleed</code></td>
             <td>Number (Any)</td>
-            <td><code>200</code></td>
+            <td><code>95</code></td>
             <td>How far over the edges should the generated triangles go.</td>
         </tr>
         <tr>
@@ -84,8 +84,8 @@ spaceyBoi.start();
         <tr>
             <td><code>pointAnimationSpeed</code></td>
             <td>Number (Any)</td>
-            <td><code>15</code></td>
-            <td>Speed at which the points move.</td>
+            <td><code>7500</code></td>
+            <td>Speed at which the points move (full cycle in ms).</td>
         </tr>
         <tr>
             <td><code>image</code></td>
