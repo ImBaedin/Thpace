@@ -1,0 +1,4 @@
+node_modules
+*.log
+thpace.js
+/thpace.min.js
