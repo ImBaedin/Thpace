@@ -25,8 +25,8 @@ Delaunator: `https://unpkg.com/delaunator@2.0.0/delaunator.min.js`
 const canvas = document.getElementById('thpace');
 
 const settings = {
-	color1: '#43C6AC',
-	color2: '#191654'
+    color1: '#43C6AC',
+    color2: '#191654'
 };
 
 const backboi = Thpace.create(canvas, settings);
