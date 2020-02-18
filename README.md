@@ -22,9 +22,14 @@ Delaunator: `https://unpkg.com/delaunator@2.0.0/delaunator.min.js`
 
 ## Javascript
 ```
-var canvas = document.getElementById('bg-canvas');
-var spaceyBoi = new Thpace(canvas);
-spaceyBoi.start();
+const canvas = document.getElementById('thpace');
+
+const settings = {
+	color1: '#43C6AC',
+	color2: '#191654'
+};
+
+const backboi = Thpace.create(canvas, settings);
 ```
 
 # Some Info
