@@ -13,7 +13,7 @@ jobs:
           node-version: 12
           registry-url: https://registry.npmjs.org/
       - name: npm install, build, build-ts, and test
-      - run: | 
+        run: | 
           npm install
           npm build --if-present
           npm run build-ts --if-present
