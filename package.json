@@ -1,14 +1,15 @@
 {
     "name": "thpace",
-    "version": "1.0.0",
+    "version": "1.0.1",
     "description": "",
     "main": "thpace.js",
-    "module": "src/index.ts",
+    "module": "lib/index.js",
     "jsdelivr": "thpace.min.js",
     "unpkg": "thpace.min.js",
     "scripts": {
         "build": "rollup -c",
-        "start": "rollup -cw"
+		"start": "rollup -cw",
+		"build-ts": "tsc"
     },
     "author": "Braedin Jared",
     "license": "ISC",

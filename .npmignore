@@ -4,3 +4,4 @@ rollup.config.js
 .gitignore
 .babelrc
 .github
+src
