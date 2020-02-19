@@ -1,8 +1,6 @@
 name: Publish NPM
 
-on:
-  release:
-    types: [created]
+on: [push]
 
 jobs:
   build:
