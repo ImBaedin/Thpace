@@ -1,24 +1,37 @@
 import Delaunator from 'delaunator';
 
+/** Interface for a simple 2d coordinate */
 interface Coords {
+	/** x coordinate */
 	x: number,
+	/** y coordinate */
 	y: number
 }
 
 interface Settings {
-	triangleSize?: number, // Triangle size (px)
-	bleed?: number, // Bleed amount over edges (px)
-	noise?: number, // Noise used when calculating points (px)
-	color1?: string, // Color in top left of screen (Hex code)
-	color2?: string, // Color in bottom Right of screen (Hex code)
-	pointVariationX?: number, // How much the points should shift on the x-axis (px)
-	pointVariationY?: number, // How much the points should shift on the y-axis (px)
-	pointAnimationSpeed?: number, // How fast the points should complete a loop (ms)
-	image?: HTMLImageElement, // Overlay image (adds a nice texture)
-	imageOpacity?: number, // Overlay image opacity
+	/** Triangle size (px). */
+	triangleSize?: number,
+	/** Bleed amount over edges (px).*/
+	bleed?: number,
+	/** Noise used when calculating points (px). */
+	noise?: number,
+	/** Color in top left of screen (Hex code). */
+	color1?: string,
+	/** Color in bottom Right of screen (Hex code). */
+	color2?: string,
+	/** How much the points should shift on the x-axis (px). */
+	pointVariationX?: number,
+	/** How much the points should shift on the y-axis (px). */
+	pointVariationY?: number,
+	/** How fast the points should complete a loop (ms). */
+	pointAnimationSpeed?: number,
+	/** Overlay image (adds a nice texture). */
+	image?: HTMLImageElement|undefined,
+	/** Overlay image opacity. */
+	imageOpacity?: number,
 }
 
-const defaultSettings = {
+const defaultSettings:Settings = {
 	triangleSize: 130,
 	bleed: 120,
 	noise: 60,
@@ -27,10 +40,13 @@ const defaultSettings = {
 	pointVariationX: 20,
 	pointVariationY: 35,
 	pointAnimationSpeed: 7500,
-	image: false,
+	image: undefined,
 	imageOpacity: .4,
 }
 
+/**
+ * Use static method 'create' to create a thpace instance.
+ */
 export default class Thpace{
 	canvas: HTMLCanvasElement;
 	ctx: CanvasRenderingContext2D;
@@ -44,7 +60,12 @@ export default class Thpace{
 	delta: number;
 	lastUpdate: number;
 
-	static create(canvas: HTMLCanvasElement, settings: Settings){
+	/**
+	 * Create an instance of thpace on your page.
+	 * @param canvas - The canvas to turn into a thpace instance.
+	 * @param settings - Optional object with settings to control the thpace instance
+	 */
+	static create(canvas: HTMLCanvasElement, settings?: Settings){
 		if(!canvas){
 			console.warn('Need a valid canvas element!');
 			return;

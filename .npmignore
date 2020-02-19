@@ -5,3 +5,4 @@ rollup.config.js
 .babelrc
 .github
 src
+tsconfig.json
