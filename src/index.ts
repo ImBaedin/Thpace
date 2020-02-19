@@ -20,7 +20,7 @@ interface Settings {
 
 const defaultSettings = {
 	triangleSize: 130,
-	bleed: 95,
+	bleed: 120,
 	noise: 60,
 	color1: '#0b8793',
 	color2: '#360033',

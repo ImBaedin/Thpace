@@ -1,0 +1,6 @@
+yarn.lock
+docs
+rollup.config.js
+.gitignore
+.babelrc
+.github
