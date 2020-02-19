@@ -1,8 +1,9 @@
 {
     "name": "thpace",
-    "version": "1.0.3",
+    "version": "1.0.4",
     "description": "",
     "main": "thpace.js",
+	"types": "lib/index.d.ts",
     "module": "lib/index.js",
     "jsdelivr": "thpace.min.js",
     "unpkg": "thpace.min.js",
