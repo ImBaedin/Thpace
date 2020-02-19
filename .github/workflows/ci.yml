@@ -12,7 +12,7 @@ jobs:
           node-version: 12
       - run: npm install
       - run: npm build --if-present
-      - run: npm build-ts --if-present
+      - run: npm run build-ts --if-present
       - run: npm test
 
   publish-npm:
