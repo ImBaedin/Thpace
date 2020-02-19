@@ -19,6 +19,7 @@ jobs:
           npm run build-ts --if-present
           npm test
       - name: publish
+        continue-on-error: true
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_AUTH_TOKEN}}
         run: npm publish
