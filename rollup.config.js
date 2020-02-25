@@ -1,6 +1,7 @@
 import babel from "rollup-plugin-babel";
+import resolve from '@rollup/plugin-node-resolve';
+import commonjs from '@rollup/plugin-commonjs';
 import {terser} from 'rollup-plugin-terser';
-import Delaunator from 'delaunator';
 
 
 const extensions = [".js", ".jsx", ".ts", ".tsx"];
@@ -8,21 +9,29 @@ const name = "Thpace";
 
 const config = (file, plugins) => ({
 	input: './src/index.ts',
-	external: [
-		'delaunator'
-	],
+	// external: [
+	// 	'delaunator',
+	// 	'color-parse',
+	// 	'color-space',
+	// 	'color-interpolate',
+	// ],
     output: {
         name,
         format: 'umd',
 		file,
-		globals: {
-			'delaunator': 'Delaunator'
-		}
+		// globals: {
+		// 	'delaunator': 'Delaunator',
+		// 	'color-parse': 'parse',
+		// 	'color-space': 'space',
+		// 	'color-interpolate': 'interpolate'
+		// }
     },
     plugins
 });
 
 export default [
-    config('thpace.js', [babel({ extensions, include: ["src/**/*"] })]),
-    config('thpace.min.js', [terser(), babel({ extensions, include: ["src/**/*"] })])
+    config('thpace.js', [resolve(), commonjs(), babel({ extensions, include: ["src/**/*"] })]),
+	config('thpace.min.js', [terser(), resolve(), commonjs(), babel({ extensions, include: ["src/**/*"] })]),
+    config('./docs/thpace.min.js', [terser(), resolve(), commonjs(), babel({ extensions, include: ["src/**/*"] })])
+	
 ];

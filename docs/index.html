@@ -53,9 +53,6 @@
                 <i class="fab fa-github"></i>
             </a>
         </div>
-
-		<script>var exports = {};</script>
-        <script src="https://unpkg.com/delaunator@2.0.0/delaunator.min.js"></script>
 		<script src="./thpace.min.js"></script>
 		
 		<script>
@@ -66,6 +63,8 @@
 				const settings = {
 					image: image,
 					imageOpacity: .3,
+					triangleSize: 100,
+					colors: ['#000000', '#EB5757']
 				};
 				
 				const backboi = Thpace.create(canvas, settings);

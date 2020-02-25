@@ -1,4 +1,7 @@
 import Delaunator from 'delaunator';
+import parse from 'color-parse';
+import space from 'color-space';
+import interpolate from 'color-interpolate';
 
 /** Interface for a simple 2d coordinate */
 interface Coords {
@@ -9,25 +12,53 @@ interface Coords {
 }
 
 interface Settings {
-	/** Triangle size (px). */
+	/** 
+	 * @default 130
+	 * @description Triangle size (px). 
+	 * */
 	triangleSize?: number,
-	/** Bleed amount over edges (px).*/
+	/** 
+	 * @default 120
+	 * @description Bleed amount over edges (px).*/
 	bleed?: number,
-	/** Noise used when calculating points (px). */
+	/** 
+	 * @default 60
+	 * @description Noise used when calculating points (px). */
 	noise?: number,
-	/** Color in top left of screen (Hex code). */
-	color1?: string,
-	/** Color in bottom Right of screen (Hex code). */
-	color2?: string,
-	/** How much the points should shift on the x-axis (px). */
+	/** 
+	 * @deprecated Use 'colors' setting.
+	 * @default undefined
+	 * @description Color in top left of screen (Hex code). 
+	 * */
+	color1?: string|Array<number>,
+	/** 
+	 * @deprecated Use 'colors' setting
+	 * @default undefined
+	 * @description Color in bottom Right of screen (Hex code). 
+	 * */
+	color2?: string|Array<number>,
+	/** 
+	 * @default ['rgba(11,135,147,1)', 'rgba(54,0,51,1)']
+	 * @description Array of colors to use for the gradient. */
+	colors?: Array<string>,
+	/** 
+	 * @default 20
+	 * @description How much the points should shift on the x-axis (px). */
 	pointVariationX?: number,
-	/** How much the points should shift on the y-axis (px). */
+	/** @default 35
+	 * @description How much the points should shift on the y-axis (px). */
 	pointVariationY?: number,
-	/** How fast the points should complete a loop (ms). */
+	/** 
+	 * @default 7500
+	 * @description How fast the points should complete a loop (ms). */
 	pointAnimationSpeed?: number,
-	/** Overlay image (adds a nice texture). */
+	/** 
+	 * @default undefined 
+	 * @description Overlay image (adds a nice texture). */
 	image?: HTMLImageElement|undefined,
-	/** Overlay image opacity. */
+	/** 
+	 * @default .4
+	 * @description Overlay image opacity. */
 	imageOpacity?: number,
 }
 
@@ -35,8 +66,7 @@ const defaultSettings:Settings = {
 	triangleSize: 130,
 	bleed: 120,
 	noise: 60,
-	color1: '#0b8793',
-	color2: '#360033',
+	colors: ['rgba(11,135,147,1)', 'rgba(54,0,51,1)'],
 	pointVariationX: 20,
 	pointVariationY: 35,
 	pointAnimationSpeed: 7500,
@@ -45,7 +75,9 @@ const defaultSettings:Settings = {
 }
 
 /**
- * Use static method 'create' to create a thpace instance.
+ * @description Use static method 'create' to create a thpace instance.
+ * @example Thpace.create(canvas, settings});
+ * @classdesc This is the main Thpace class. Used to create a thpace instance on a given canvas.
  */
 export default class Thpace{
 	canvas: HTMLCanvasElement;
@@ -70,12 +102,21 @@ export default class Thpace{
 			console.warn('Need a valid canvas element!');
 			return;
 		}
+
 		return new Thpace(canvas, Object.assign({}, defaultSettings, settings));
 	}
 
 	constructor(canvas: HTMLCanvasElement, settings: Settings){
 		this.canvas = canvas;
 		this.settings = settings;
+
+		if(settings.color1 && settings.color2 && typeof settings.color1 === 'string' && typeof settings.color2 === 'string' ){
+			this.settings.colors = [ getRGBA(settings.color1), getRGBA(settings.color2) ];
+		}
+		else if(this.settings.colors){
+			this.settings.colors = this.settings.colors.map((color)=> getRGBA(color));
+		}
+
 		this.ctx = <CanvasRenderingContext2D> canvas.getContext('2d');
 		this.width = 0;
 		this.height = 0;
@@ -119,11 +160,10 @@ export default class Thpace{
         points.push([this.width, 0]);
         points.push([this.width, this.height]);
 
-        const bleed: number = this.settings.bleed || 0;
-        const size: number = this.settings.triangleSize || 0;
-		const noise: number = this.settings.noise || 0;
-		const color1: string = this.settings.color1 || '';
-		const color2: string = this.settings.color2 || '';
+        const bleed: number = this.settings.bleed!;
+        const size: number = this.settings.triangleSize!;
+		const noise: number = this.settings.noise!;
+		const colors: Array<string> = this.settings.colors!;
 
         for (let i = 0 - bleed; i < this.width + bleed; i += size) {
             for (let j = 0 - bleed; j < this.height + bleed; j += size) {
@@ -152,9 +192,8 @@ export default class Thpace{
             coords.push({x: t[1][0], y: t[1][1]});
             coords.push({x: t[2][0], y: t[2][1]});
 
-            let color = gradient(getCenter(coords), this.width, this.height, color1, color2);
+			t.push(gradient(getCenter(coords), this.width, this.height, colors));
 
-            t.push(color);
             coordinates.push(t);
         }
 
@@ -210,10 +249,13 @@ export default class Thpace{
             coords.push({x: t[1][0], y: t[1][1]});
             coords.push({x: t[2][0], y: t[2][1]});
 
-            let color = t[3];
+			const color = t[3];
+			const style = `rgb(${color[0]}, ${color[1]}, ${color[2]})`;
 
-            ctx.fillStyle = color;
-            ctx.strokeStyle = color;
+            ctx.fillStyle = style;
+			ctx.strokeStyle = style;
+			
+			ctx.globalAlpha = color[3];
 
             let dp = [0,1,2,0];
             dp.forEach((el, ind)=>{
@@ -233,8 +275,10 @@ export default class Thpace{
                 }
             });
 
-            ctx.fill();
-            ctx.stroke();
+			ctx.fill();
+			ctx.stroke();
+			ctx.globalAlpha = 1;
+			ctx.globalCompositeOperation = 'source-over';
         });
 
 
@@ -326,7 +370,9 @@ class Particle{
     }
 }
 
-function gradient(coords: Coords, width: number, height: number, color1: string, color2: string) {
+const rgb = /rgb\((\d{1,3}),\s*(\d{1,3}),\s*(\d{1,3})\)/;
+const rgba = /rgba\((\d{1,3}),\s*(\d{1,3}),\s*(\d{1,3}),\s*(\d{1,3}|.*)\)/;
+function gradient(coords: Coords, width: number, height: number, colors: Array<string>):Array<number> {
     let x = coords.x;
     let y = coords.y;
     let per = 0;
@@ -339,18 +385,23 @@ function gradient(coords: Coords, width: number, height: number, color1: string,
     }
     else if(per < 0){
         per = 0;
-    }
-    let hex = function (x: number) {
-		let xs = x.toString(16);
-        return (xs.length == 1) ? '0' + xs : xs;
-    };
-    let r = Math.ceil(parseInt(color2.substring(1, 3), 16) * per + parseInt(color1.substring(1, 3), 16) * (1 - per));
-    let g = Math.ceil(parseInt(color2.substring(3, 5), 16) * per + parseInt(color1.substring(3, 5), 16) * (1 - per));
-    let b = Math.ceil(parseInt(color2.substring(5, 7), 16) * per + parseInt(color1.substring(5, 7), 16) * (1 - per));
-    let middle = "#" + hex(r) + hex(g) + hex(b);
-    return middle;
-}
+	}
+	
+	const color = interpolate(colors)(per);
+	let match;
 
+	if(color.match(rgb)){
+		match = color.match(rgb)!.slice(1, 4).map((num)=>parseInt(num));
+		return [match[0], match[1], match[2], 1];
+	}
+	else if(color.match(rgba)){
+		match = color.match(rgba)!.slice(1, 5).map((num)=>parseFloat(num));
+		return [match[0], match[1], match[2], match[3]];
+	}
+	else{
+		return [0,0,0,0];
+	}
+}
 
 function getCenter(coords: Array<Coords>) {
 	var sumX = 0;
@@ -370,4 +421,15 @@ function getRandomInt(min: number, max: number) {
 
 function getRandomFloat(min: number, max: number) {
     return (Math.random() * (max - min) + min);
+}
+
+function getRGBA(color:string|Array<number>|undefined):string{
+	if(!color){
+		console.warn(`Incorrect color: ${color}`);
+		return 'rgba(0,0,0,0)';
+	}
+	const parsed = parse(color);
+	const opacity = parsed.alpha;
+	const s = space[parsed.space].rgb(parsed.values);
+	return `rgba(${s[0]}, ${s[1]}, ${s[2]}, ${opacity})`;
 }
