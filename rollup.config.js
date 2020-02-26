@@ -9,22 +9,10 @@ const name = "Thpace";
 
 const config = (file, plugins) => ({
 	input: './src/index.ts',
-	// external: [
-	// 	'delaunator',
-	// 	'color-parse',
-	// 	'color-space',
-	// 	'color-interpolate',
-	// ],
     output: {
         name,
         format: 'umd',
 		file,
-		// globals: {
-		// 	'delaunator': 'Delaunator',
-		// 	'color-parse': 'parse',
-		// 	'color-space': 'space',
-		// 	'color-interpolate': 'interpolate'
-		// }
     },
     plugins
 });
@@ -33,5 +21,4 @@ export default [
     config('thpace.js', [resolve(), commonjs(), babel({ extensions, include: ["src/**/*"] })]),
 	config('thpace.min.js', [terser(), resolve(), commonjs(), babel({ extensions, include: ["src/**/*"] })]),
     config('./docs/thpace.min.js', [terser(), resolve(), commonjs(), babel({ extensions, include: ["src/**/*"] })])
-	
 ];

@@ -1,15 +1,8 @@
 import Delaunator from 'delaunator';
-import parse from 'color-parse';
-import space from 'color-space';
 import interpolate from 'color-interpolate';
 
-/** Interface for a simple 2d coordinate */
-interface Coords {
-	/** x coordinate */
-	x: number,
-	/** y coordinate */
-	y: number
-}
+// I guess there is an issue with rollup and we need to specify the '.ts'
+import {Coords, parseColor} from './utils.ts';
 
 interface Settings {
 	/** 
@@ -423,13 +416,11 @@ function getRandomFloat(min: number, max: number) {
     return (Math.random() * (max - min) + min);
 }
 
-function getRGBA(color:string|Array<number>|undefined):string{
+function getRGBA(color:string):string{
 	if(!color){
 		console.warn(`Incorrect color: ${color}`);
 		return 'rgba(0,0,0,0)';
 	}
-	const parsed = parse(color);
-	const opacity = parsed.alpha;
-	const s = space[parsed.space].rgb(parsed.values);
-	return `rgba(${s[0]}, ${s[1]}, ${s[2]}, ${opacity})`;
+
+	return `rgba(${parseColor(color).join(',')})`;
 }
