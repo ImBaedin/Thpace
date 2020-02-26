@@ -2,6 +2,7 @@ import Delaunator from 'delaunator';
 import interpolate from 'color-interpolate';
 
 // I guess there is an issue with rollup and we need to specify the '.ts'
+// @ts-ignore
 import {Coords, parseColor} from './utils.ts';
 
 interface Settings {
