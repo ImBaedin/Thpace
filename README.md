@@ -1,108 +1,55 @@
-# Thpace
-Thpace is a pretty canvas creation of mine. It makes a space animation out of triangles.
 
-There is one dependency.  
-Delaunator: `https://unpkg.com/delaunator@2.0.0/delaunator.min.js`
+#  Thpace
+
+Thpace is a pretty canvas creation of mine. It makes a space animation out of triangles.
 
 [Example](https://www.braedin.com/Thpace/)
 
+# Usage
+You can install Thpace through NPM as a module, or through a CDN
+## NPM
+`yarn add thpace`
+ \- or -
+ `npm install thpace`
+ 
+## CDN
+`https://unpkg.com/thpace` Will get you the minified build
+Then, you can import:
+```html
+<script src="https://unpkg.com/thpace"></script>
+```
 
-## HTML
-```
-<body>
-...
-<container>
-    <canvas id="thpace"></canvas>
-</container>
-...
-<script src="https://unpkg.com/delaunator@2.0.0/delaunator.min.js"></script>
-<script src="./js/Thpace.js"></script>
-</body>
-```
+##  Ok but like what code do I write to use it?
 
-## Javascript
-```
-const canvas = document.getElementById('thpace');
+```js
+import Thpace from 'thpace';
+// or
+const Thpace = require('thpace');
+// or, if you used the CDN, skip those
+
+const canvas = document.querySelector('#make-me-cool');
 
 const settings = {
-    color1: '#43C6AC',
-    color2: '#191654'
+	colors: ['#4CB1EF',  '#424959',  '#FF4B44'],
+	triangleSize: 100
 };
 
-const backboi = Thpace.create(canvas, settings);
+Thpace.create(canvas, settings);
 ```
 
-# Some Info
-## Settings
-<table class="table table-bordered">
-    <thead>
-        <tr>
-            <th>Setting</th>
-            <th>Accepts</th>
-            <th>Default</th>
-            <th>Description</th>
-        </tr>
-    </thead>
-    <tbody>
-        <tr>
-            <td><code>triangleSize</code></td>
-            <td>Number (Any)</td>
-            <td><code>130</code></td>
-            <td>Size of each triangle</td>
-        </tr>
-        <tr>
-            <td><code>bleed</code></td>
-            <td>Number (Any)</td>
-            <td><code>95</code></td>
-            <td>How far over the edges should the generated triangles go.</td>
-        </tr>
-        <tr>
-            <td><code>noise</code></td>
-            <td>Number (Any)</td>
-            <td><code>60</code></td>
-            <td>How much the edges of triangles should vary.</td>
-        </tr>
-        <tr>
-            <td><code>color1</code></td>
-            <td>String (Form of '#******')</td>
-            <td><code>'#360033'</code></td>
-            <td>Color at the top left of the canvas.</td>
-        </tr>
-        <tr>
-            <td><code>color2</code></td>
-            <td>String (Form of '#******')</td>
-            <td><code>'#0b8793'</code></td>
-            <td>Color at the bottom right of the canvas.</td>
-        </tr>
-        <tr>
-            <td><code>pointVariationX</code></td>
-            <td>Number (any)</td>
-            <td><code>20</code></td>
-            <td>Variation of the points X.</td>
-        </tr>
-        <tr>
-            <td><code>pointVariationY</code></td>
-            <td>Number (Any)</td>
-            <td><code>35</code></td>
-            <td>Variation of the points Y.</td>
-        </tr>
-        <tr>
-            <td><code>pointAnimationSpeed</code></td>
-            <td>Number (Any)</td>
-            <td><code>7500</code></td>
-            <td>Speed at which the points move (full cycle in ms).</td>
-        </tr>
-        <tr>
-            <td><code>image</code></td>
-            <td>Image</td>
-            <td><code>false</code></td>
-            <td>Image for the canvas to repeat over itself.</td>
-        </tr>
-        <tr>
-            <td><code>imageOpacity</code></td>
-            <td>Decimal (0-1)</td>
-            <td><code>.4</code></td>
-            <td>Opacity of the image that is drawn.</td>
-        </tr>
-    </tbody>
-</table>
+  
+
+#  Some Info
+
+##  Settings
+|Setting|Accepts|Default|Description|
+|--|--|--|--|
+|`triangleSize`|number|`130`|Triangle size (px)|
+|`bleed`|number|`120`|Bleed amount over canvas edges (px)|
+|`noise`|number|`60`|Noise used when calculating points (px)|
+|`colors`|Array\<string>|`['rgba(11,135,147,1)', 'rgba(54,0,51,1)']`|Array of colors to use for the gradient|
+|`pointVariationX`|number|`20`|How much the points should shift on the x-axis (px)|
+|`pointVariationY`|number|`35`|How much the points should shift on the y-axis (px)|
+|`pointAnimationSpeed`|number|`7500`|How fast the points should complete a loop (ms)|
+|`image`|HTMLImageElement|`undefined`|Overlay image (adds a nice texture)|
+|`imageOpacity`|number|`.4`|Overlay image opacity|
