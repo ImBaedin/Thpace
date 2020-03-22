@@ -1,6 +1,9 @@
 name: Publish NPM
 
-on: [push]
+on:
+  pull_request:
+    branches:
+      - master
 
 jobs:
   build:
@@ -18,8 +21,3 @@ jobs:
           npm run build --if-present
           npm run build-ts --if-present
           # npm test
-      - name: publish
-        continue-on-error: true
-        env:
-          NODE_AUTH_TOKEN: ${{secrets.NPM_AUTH_TOKEN}}
-        run: npm publish
