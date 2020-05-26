@@ -18,7 +18,7 @@ const config = (file, plugins) => ({
 });
 
 export default [
-    config('thpace.js', [resolve(), commonjs(), babel({ extensions, include: ["src/**/*"] })]),
-	config('thpace.min.js', [terser(), resolve(), commonjs(), babel({ extensions, include: ["src/**/*"] })]),
-    config('./docs/thpace.min.js', [terser(), resolve(), commonjs(), babel({ extensions, include: ["src/**/*"] })])
+    config('thpace.js', [resolve({ extensions }), commonjs(), babel({ extensions, include: ["src/**/*"] })]),
+	config('thpace.min.js', [terser(), resolve({ extensions }), commonjs(), babel({ extensions, include: ["src/**/*"] })]),
+    config('./docs/thpace.min.js', [terser(), resolve({ extensions }), commonjs(), babel({ extensions, include: ["src/**/*"] })])
 ];

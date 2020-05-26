@@ -1,79 +1,259 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-        <title>THPACE!</title>
-        <link
-            rel="stylesheet"
-            href="https://pro.fontawesome.com/releases/v5.2.0/css/all.css"
-            integrity="sha384-TXfwrfuHVznxCssTxWoPZjhcss/hp38gEOH8UPZG/JcXonvBQ6SlsIF49wUzsGno"
-            crossorigin="anonymous"
-        />
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<meta http-equiv="X-UA-Compatible" content="ie=edge" />
+		<title>THPACE!</title>
+		<link
+			rel="stylesheet"
+			href="https://pro.fontawesome.com/releases/v5.2.0/css/all.css"
+			integrity="sha384-TXfwrfuHVznxCssTxWoPZjhcss/hp38gEOH8UPZG/JcXonvBQ6SlsIF49wUzsGno"
+			crossorigin="anonymous"
+		/>
 
-        <style>
-            html,
-            body {
-                margin: 0;
-                height: 100%;
-                font-size: 0;
-                display: flex;
-                align-items: center;
-                justify-content: center;
-            }
-            #bg {
-                position: fixed;
-                left: 0;
-                right: 0;
-                height: 100%;
-                width: 100%;
-            }
-            .link {
-                font-size: 50px;
-                color: white;
-                z-index: 100;
-            }
-            .link:hover {
-                color: #fcfcfc;
-            }
-            a {
-                color: inherit;
-            }
-        </style>
-    </head>
+		<style>
+			html,
+			body {
+				margin: 0;
+				height: 100%;
+				font-size: 0;
+				display: flex;
+				align-items: center;
+				justify-content: center;
+			}
+			#bg {
+				position: fixed;
+				left: 0;
+				right: 0;
+				height: 100%;
+				width: 100%;
+			}
+			#overlay{
+				position: absolute;
+				left: 0;
+				top: 0;
+				height: 100%;
+				width: 100%;
+				background-image: url('./overlay.png');
+				background-repeat: repeat;
+				opacity: 0.3;
+			}
+			.link {
+				font-size: 50px;
+				color: white;
+				z-index: 100;
+			}
+			.link:hover {
+				color: #fcfcfc;
+			}
+			a {
+				color: inherit;
+			}
+		</style>
+	</head>
 
-    <body>
-        <div id="bg">
-            <canvas id="background"></canvas>
-        </div>
+	<body>
+		<div id="bg">
+			<canvas id="background"></canvas>
+			<div id="overlay"></div>
+		</div>
 
-        <div class="link">
-            <a href="https://github.com/ImBaedin/Thpace">
-                <i class="fab fa-github"></i>
-            </a>
-        </div>
+		<div class="link">
+			<a href="https://github.com/ImBaedin/Thpace">
+				<i class="fab fa-github"></i>
+			</a>
+		</div>
+		<script src="https://unpkg.com/dat.gui" crossorigin="anonymous"></script>
 		<script src="./thpace.min.js"></script>
 		
 		<script>
 			const canvas = document.getElementById('background');
+			let backboi;
 
-			const image = new Image();
-			image.onload = function(){
-				const settings = {
-					image: image,
-					imageOpacity: .3,
-					triangleSize: 100,
-					// colors: ['#000000', '#EB5757'],
-					colors: ['#4CB1EF', '#424959', '#FF4B44'],
-				};
-				
-				const backboi = Thpace.create(canvas, settings);
-			}
-
-			image.src = './soft-wallpaper.png';
+			const settings = {
+				triangleSize: 90,
+				colors: ['#4CB1EF', '#424959', '#FF4B44'],
+				maxFps: 144,
+				particleSettings: {}
+			};
+			
+			backboi = Thpace.create(canvas, settings);
+			backboi.debug();
 			//Easy
 
+			const gui = new dat.GUI();
+
+			
+			const guiSettings = {
+				updateColor(num, color){
+					let colors = backboi.settings.colors.slice();
+					colors[num] = color;
+					backboi.updateSettings({
+						colors
+					});
+				},
+				// Triangles
+				get color1(){
+					return '#'+rgbaToHex(backboi.settings.colors[0]).slice(0,6);
+				},
+				set color1(value){
+					this.updateColor(0, value);
+				},
+				get color2(){
+					return '#'+rgbaToHex(backboi.settings.colors[1]).slice(0,6);
+				},
+				set color2(value){
+					this.updateColor(1, value);
+				},
+				get color3(){
+					return '#'+rgbaToHex(backboi.settings.colors[2]).slice(0,6);
+				},
+				set color3(value){
+					this.updateColor(2, value);
+				},
+				// Particles
+				updateRange(type, entry, value){
+					let setting = backboi.settings.particleSettings[type].slice();
+					setting[entry] = value;
+					backboi.updateSettings({
+						particleSettings: {
+							[type]: setting
+						}
+					});
+				},
+				get countMin(){return backboi.settings.particleSettings.count[0]},
+				get countMax(){return backboi.settings.particleSettings.count[1]},
+				set countMin(value){
+					this.updateRange('count', 0, value);
+				},
+				set countMax(value){
+					this.updateRange('count', 1, value);
+				},
+				get intervalMin(){return backboi.settings.particleSettings.interval[0]},
+				get intervalMax(){return backboi.settings.particleSettings.interval[1]},
+				set intervalMin(value){
+					this.updateRange('interval', 0, value);
+				},
+				set intervalMax(value){
+					this.updateRange('interval', 1, value);
+				},
+				get radiusMin(){return backboi.settings.particleSettings.radius[0]},
+				get radiusMax(){return backboi.settings.particleSettings.radius[1]},
+				set radiusMin(value){
+					this.updateRange('radius', 0, value);
+				},
+				set radiusMax(value){
+					this.updateRange('radius', 1, value);
+				},
+				get opacityMin(){return backboi.settings.particleSettings.opacity[0]},
+				get opacityMax(){return backboi.settings.particleSettings.opacity[1]},
+				set opacityMin(value){
+					this.updateRange('opacity', 0, value);
+				},
+				set opacityMax(value){
+					this.updateRange('opacity', 1, value);
+				},
+				get variationXMin(){return backboi.settings.particleSettings.variationX[0]},
+				get variationXMax(){return backboi.settings.particleSettings.variationX[1]},
+				set variationXMin(value){
+					this.updateRange('variationX', 0, value);
+				},
+				set variationXMax(value){
+					this.updateRange('variationX', 1, value);
+				},
+				get variationYMin(){return backboi.settings.particleSettings.variationY[0]},
+				get variationYMax(){return backboi.settings.particleSettings.variationY[1]},
+				set variationYMin(value){
+					this.updateRange('variationY', 0, value);
+				},
+				set variationYMax(value){
+					this.updateRange('variationY', 1, value);
+				},
+				get color(){return backboi.settings.particleSettings.color},
+				set color(value){backboi.updateSettings({particleSettings: { color: value}})}
+			};
+
+			let triangleSettings = gui.addFolder('Triangles');
+
+
+			let colors = triangleSettings.addFolder('Colors');
+			let color1 = colors.addColor(guiSettings, 'color1');
+			let color2 = colors.addColor(guiSettings, 'color2');
+			let color3 = colors.addColor(guiSettings, 'color3');
+
+			let triangleSize= triangleSettings.add(backboi.settings, 'triangleSize', 10, 150);
+			triangleSize.onChange((value)=>{
+				backboi.updateSettings({
+					triangleSize: value,
+					force: true
+				});
+			});
+			let bleed = triangleSettings.add(backboi.settings, 'bleed', -50, 150);
+			bleed.onChange((value)=>{
+				backboi.updateSettings({
+					bleed: value,
+					force: true
+				});
+			});
+			let noise = triangleSettings.add(backboi.settings, 'noise', -100, 100);
+
+			let pointVariationX = triangleSettings.add(backboi.settings, 'pointVariationX', 0, 50);
+			let pointVariationY = triangleSettings.add(backboi.settings, 'pointVariationY', 0, 50);
+			let pointAnimationSpeed = triangleSettings.add(backboi.settings, 'pointAnimationSpeed', 500, 20000);
+			let animationOffset = triangleSettings.add(backboi.settings, 'animationOffset', 1, 1000);
+
+			let particleSettings = gui.addFolder('Particles');
+
+			let count = particleSettings.addFolder('Count');
+			let countMin = count.add(guiSettings, 'countMin', 1, 5);
+			let countMax = count.add(guiSettings, 'countMax', 5, 10);
+			
+			let interval = particleSettings.addFolder('Interval');
+			let intervalMin = interval.add(guiSettings, 'intervalMin', 500, 5000);
+			let intervalMax = interval.add(guiSettings, 'intervalMax', 5000, 10000);
+
+			let radius = particleSettings.addFolder('Radius');
+			let radiusMin = radius.add(guiSettings, 'radiusMin', 0, 2);
+			let radiusMax = radius.add(guiSettings, 'radiusMax', 2, 5);
+
+			let opacity = particleSettings.addFolder('Opacity');
+			let opacityMin = opacity.add(guiSettings, 'opacityMin', 0.1, 0.5);
+			let opacityMax = opacity.add(guiSettings, 'opacityMax', 0.5, 1);
+
+			let variationX = particleSettings.addFolder('Variation X');
+			let variationXMin = variationX.add(guiSettings, 'variationXMin', 0, 10);
+			let variationXMax = variationX.add(guiSettings, 'variationXMax', 10, 20);
+
+			let variationY = particleSettings.addFolder('Varitation Y');
+			let variationYMin = variationY.add(guiSettings, 'variationYMin', 0, 5);
+			let variationYMax = variationY.add(guiSettings, 'variationYMax', 5, 10);
+
+			let color = particleSettings.addColor(guiSettings, 'color');
+
+			let maxFps = gui.add(backboi.settings, 'maxFps', 1, 144);
+
+			function rgbaToHex(orig) {
+				var a, isPercent,
+					rgb = orig.replace(/\s/g, '').match(/^rgba?\((\d+),(\d+),(\d+),?([^,\s)]+)?/i),
+					alpha = (rgb && rgb[4] || "").trim(),
+					hex = rgb ?
+					(rgb[1] | 1 << 8).toString(16).slice(1) +
+					(rgb[2] | 1 << 8).toString(16).slice(1) +
+					(rgb[3] | 1 << 8).toString(16).slice(1) : orig;
+
+				if (alpha !== "") {
+					a = alpha;
+				} else {
+					a = 01;
+				}
+				// multiply before convert to HEX
+				a = ((a * 255) | 1 << 8).toString(16).slice(1)
+				hex = hex + a;
+
+				return hex;
+			}
+
 		</script>
-    </body>
+	</body>
 </html>

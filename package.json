@@ -1,6 +1,6 @@
 {
     "name": "thpace",
-    "version": "1.1.2",
+    "version": "1.2.0",
     "description": "",
     "main": "thpace.js",
     "types": "lib/index.d.ts",
@@ -22,6 +22,7 @@
     "devDependencies": {
         "@babel/core": "^7.8.4",
         "@babel/plugin-proposal-class-properties": "^7.8.3",
+        "@babel/plugin-transform-classes": "^7.9.5",
         "@babel/plugin-transform-object-assign": "^7.8.3",
         "@babel/preset-env": "^7.8.4",
         "@babel/preset-typescript": "^7.8.3",
@@ -30,6 +31,7 @@
         "@types/chai": "^4.2.9",
         "@types/delaunator": "^3.0.0",
         "@types/mocha": "^7.0.1",
+        "@types/stats.js": "^0.17.0",
         "chai": "^4.2.0",
         "mocha": "^7.0.1",
         "rollup": "^1.31.1",
@@ -40,6 +42,7 @@
     },
     "dependencies": {
         "color-interpolate": "^1.0.5",
-        "delaunator": "^4.0.1"
+        "delaunator": "^4.0.1",
+        "stats.js": "^0.17.0"
     }
 }

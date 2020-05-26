@@ -14,6 +14,7 @@ You can install Thpace through NPM as a module, or through a CDN
  
 ## CDN
 `https://unpkg.com/thpace` Will get you the minified build
+
 Then, you can import:
 ```html
 <script src="https://unpkg.com/thpace"></script>
@@ -51,5 +52,17 @@ Thpace.create(canvas, settings);
 |`pointVariationX`|number|`20`|How much the points should shift on the x-axis (px)|
 |`pointVariationY`|number|`35`|How much the points should shift on the y-axis (px)|
 |`pointAnimationSpeed`|number|`7500`|How fast the points should complete a loop (ms)|
-|`image`|HTMLImageElement|`undefined`|Overlay image (adds a nice texture)|
-|`imageOpacity`|number|`.4`|Overlay image opacity|
+|`animationOffset`|number|`250`|Interval on the x-axis for the animation offset (px)|
+|`maxFps`|number|`144`|Limit how many frames are drawn per second|
+|`particleSettings`|ParticleSettings|`{}`|Settings for the particles|
+
+### Particle Settings
+|Setting|Accepts|Default|Description|
+|--|--|--|--|
+|`count`|number \|\| `[min, max]`|`[2, 5]`|How many particles should be generated per 100 pixels|
+|`interval`|number \|\| `[min, max]`|`[5000, 10000]`|Interval for a particle to complete it's animation (ms)|
+|`radius`|number \|\| `[min, max]`|`[1, 2]`|Particle radius (px)|
+|`opacity`|number \|\| `[min, max]`|`[.1, .7]`|Particle opacity|
+|`variationX`|number \|\| `[min, max]`|`[5, 15]`|Variation in the particle animation on the x-axis (px)|
+|`variationY`|number \|\| `[min, max]`|`[2.5, 7.5]`|Variation in the particle animation on the y-axis (px)|
+|`color`|string|`#ffffff`|Color of the particles|
