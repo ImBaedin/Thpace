@@ -286,10 +286,12 @@ export default class Thpace {
 		const pointVariationY = this.settings.pointVariationY!;
 		const pointAnimationSpeed = this.settings.pointAnimationSpeed!;
 
+		const time = Math.PI * 2 * performance.now()/pointAnimationSpeed;
+
 		this.points = this.points.map(p=>{
 			let per = p.initX / animationOffset;
-			p.x = p.initX + Math.sin((per) + Math.PI * 2 * performance.now()/pointAnimationSpeed) * pointVariationX!;
-			p.y = p.initY + Math.cos((per) + Math.PI * 2 * performance.now()/pointAnimationSpeed) * pointVariationY!;
+			p.x = p.initX + Math.sin((per) + time) * pointVariationX!;
+			p.y = p.initY + Math.cos((per) + time) * pointVariationY!;
 			return p;
 		});
 	}

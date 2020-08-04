@@ -86,11 +86,11 @@
 
 			
 			const guiSettings = {
-				updateColor(num, color){
+				updateColor: function(num, color){
 					let colors = backboi.settings.colors.slice();
 					colors[num] = color;
 					backboi.updateSettings({
-						colors
+						colors: colors
 					});
 				},
 				// Triangles
@@ -113,13 +113,13 @@
 					this.updateColor(2, value);
 				},
 				// Particles
-				updateRange(type, entry, value){
+				updateRange: function(type, entry, value){
 					let setting = backboi.settings.particleSettings[type].slice();
 					setting[entry] = value;
+					let particleSettings = {};
+					particleSettings[type] = setting;
 					backboi.updateSettings({
-						particleSettings: {
-							[type]: setting
-						}
+						particleSettings: particleSettings
 					});
 				},
 				get countMin(){return backboi.settings.particleSettings.count[0]},
@@ -183,14 +183,14 @@
 			let color3 = colors.addColor(guiSettings, 'color3');
 
 			let triangleSize= triangleSettings.add(backboi.settings, 'triangleSize', 10, 150);
-			triangleSize.onChange((value)=>{
+			triangleSize.onChange(function(value){
 				backboi.updateSettings({
 					triangleSize: value,
 					force: true
 				});
 			});
 			let bleed = triangleSettings.add(backboi.settings, 'bleed', -50, 150);
-			bleed.onChange((value)=>{
+			bleed.onChange(function(value){
 				backboi.updateSettings({
 					bleed: value,
 					force: true
