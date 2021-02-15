@@ -54,6 +54,7 @@ Thpace.create(canvas, settings);
 |`pointAnimationSpeed`|number|`7500`|How fast the points should complete a loop (ms)|
 |`animationOffset`|number|`250`|Interval on the x-axis for the animation offset (px)|
 |`maxFps`|number|`144`|Limit how many frames are drawn per second|
+|`automaticResize`|boolean|`true`|Set to false to prevent Thpace from reacting to resize events|
 |`particleSettings`|ParticleSettings|`{}`|Settings for the particles|
 
 ### Particle Settings

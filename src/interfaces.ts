@@ -107,6 +107,11 @@ export interface Settings {
 	 * */
 	imageOpacity?: number;
 	/**
+	 * @default true
+	 * @description Set to false to prevent Thpace from reacting to resize events
+	 */
+	automaticResize?: boolean;
+	/**
 	 * @default defaultParticleSettings
 	 * @description Settings for the floating particles.
 	 */

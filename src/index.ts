@@ -26,6 +26,7 @@ const defaultSettings: Settings = {
 	animationOffset: 250,
 	image: undefined,
 	imageOpacity: 0.4,
+	automaticResize: true,
 	particleSettings: defaultParticleSettings
 };
 
@@ -66,6 +67,8 @@ export default class Thpace {
 	}
 
 	constructor(canvas: HTMLCanvasElement, settings: Settings) {
+		this.resize = this.resize.bind(this);
+		
 		this.canvas = canvas;
 		this.settings = settings;
 
@@ -104,8 +107,10 @@ export default class Thpace {
 			this.pattern = this.ctx.createPattern(this.settings.image, 'repeat')!;
 		}
 
-		window.addEventListener("resize", ()=>{this.resize()});
-		this.resize(false);
+		if(settings.automaticResize){
+			window.addEventListener("resize", this.resize);
+		}
+		this.resize(null, false);
 		this.init();
 		this.animate();
 	}
@@ -115,7 +120,7 @@ export default class Thpace {
 		document.body.appendChild( this.stats.dom );
 	}
 
-	resize(reInit = true) {
+	resize(event: UIEvent|null = null, reInit = true) {
 		let p = this.canvas.parentElement;
 		if (p) {
 			this.canvas.width = p.clientWidth;
@@ -127,9 +132,8 @@ export default class Thpace {
 		) {
 			this.dim.width = this.canvas.width;
 			this.dim.height = this.canvas.height;
+			if(reInit) this.init();
 		}
-
-		if(reInit) this.init();
 	}
 
 	/**
@@ -264,6 +268,17 @@ export default class Thpace {
 		
 		// Case: imageOpacity - trivial
 		if(diff.imageOpacity) this.settings.imageOpacity = diff.imageOpacity;
+
+		// Case: automaticResize - trivial
+		if(diff.automaticResize !== undefined){
+			this.settings.automaticResize = diff.automaticResize;
+			if(diff.automaticResize){
+				window.addEventListener("resize", this.resize);
+			}
+			else{
+				window.removeEventListener("resize", this.resize);
+			}
+		}
 
 		// Now for the particles
 		// Case: particleSettings
