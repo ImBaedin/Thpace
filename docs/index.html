@@ -78,8 +78,8 @@
 				particleSettings: {}
 			};
 			
-			// backboi = Thpace.create(canvas, settings);
-			backboi = ThpaceGL.create(canvas, settings);
+			backboi = Thpace.create(canvas, settings);
+			// backboi = ThpaceGL.create(canvas, settings);
 			backboi.debug();
 			//Easy
 
@@ -198,6 +198,12 @@
 				});
 			});
 			let noise = triangleSettings.add(backboi.settings, 'noise', -100, 100);
+			noise.onChange(function(value){
+				backboi.updateSettings({
+					noise: value,
+					force: true
+				});
+			});
 
 			let pointVariationX = triangleSettings.add(backboi.settings, 'pointVariationX', 0, 50);
 			let pointVariationY = triangleSettings.add(backboi.settings, 'pointVariationY', 0, 50);
