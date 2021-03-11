@@ -1,23 +1,5 @@
 import interpolate from "color-interpolate";
 
-/**
- * @description Interface for Thpace points
- * */
-export interface Point {
-	/** Initial x coordinate */
-	initX: number,
-	/** Initial y coordinate */
-	initY: number,
-	/** x coordinate */
-	x: number;
-	/** y coordinate */
-	y: number;
-	/** Noise for the x axis */
-	xNoise: number;
-	/** Noise for the y axis */
-	yNoise: number;
-}
-
 const cssColors = {
 	aliceblue: "#f0f8ff",
 	antiquewhite: "#faebd7",

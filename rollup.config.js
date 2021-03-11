@@ -5,7 +5,7 @@ import {terser} from 'rollup-plugin-terser';
 
 
 const extensions = [".js", ".jsx", ".ts", ".tsx"];
-const name = "Thpace";
+const name = "window";
 
 const config = (file, plugins) => ({
 	input: './src/index.ts',
@@ -13,6 +13,7 @@ const config = (file, plugins) => ({
         name,
         format: 'umd',
 		file,
+        extend: true
     },
     plugins
 });
