@@ -317,14 +317,16 @@ export function objectDiff<T>(a: T, b: T){
  * @param width Width of canvas
  * @param height Height of canvas
  * @param colors Array of colors specified by string
+ * @param returnString Should the function return a string
  */
 export function gradient(
 	x: number,
 	y: number,
 	width: number,
 	height: number,
-	colors: Array<string>
-): string {
+	colors: Array<string>,
+	returnString: boolean = true
+): string | [number, number, number, number] {
 	let per = 0;
 	per = x / width;
 	let per2 = 0;
@@ -338,21 +340,26 @@ export function gradient(
 
 	const color = interpolate(colors)(per);
 	let match;
-
 	if (color.match(rgb)) {
 		match = color
 			.match(rgb)!
 			.slice(1, 4)
 			.map((num:any) => parseInt(num));
-		return `rgba(${match[0]}, ${match[1]}, ${match[2]}, 1)`;
+
+		if(returnString) return `rgba(${match[0]}, ${match[1]}, ${match[2]}, 1)`;
+		return [match[0], match[1], match[2], 1];
+
 	} else if (color.match(rgba)) {
 		match = color
 			.match(rgba)!
 			.slice(1, 5)
 			.map((num:any) => parseFloat(num));
-		return `rgba(${match[0]}, ${match[1]}, ${match[2]}, ${match[3]})`;
+
+		if(returnString) return `rgba(${match[0]}, ${match[1]}, ${match[2]}, ${match[3]})`;
+		return [match[0], match[1], match[2], match[3]];
 	} else {
-		return `rgba(0,0,0,0)`;
+		if(returnString) return `rgba(0,0,0,0)`;
+		return [0,0,0,0];
 	}
 }
 
