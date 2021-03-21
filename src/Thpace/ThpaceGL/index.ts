@@ -362,7 +362,8 @@ export default class ThpaceGL extends ThpaceBase{
 		if(diff.noise){
 			const noise = diff.noise;
 			this.settings.noise = noise;
-
+			
+			gl.useProgram(this.triangleShaderProgram);
 			const uNoise = gl.getUniformLocation(this.triangleShaderProgram, "uNoise");
 			gl.uniform1f(uNoise, this.settings.noise!);
 
@@ -384,13 +385,15 @@ export default class ThpaceGL extends ThpaceBase{
 		// Case: pointVariationX/Y - Seems trivial, however if we want it to be a smooth transition that's different
 		if(diff.pointVariationX){
 			this.settings.pointVariationX = diff.pointVariationX;
-
+			
+			gl.useProgram(this.triangleShaderProgram);
 			const uPointVariationX = gl.getUniformLocation(this.triangleShaderProgram, "uPointVariationX");
 			gl.uniform1f(uPointVariationX, this.settings.pointVariationX!);
 		}
 		if(diff.pointVariationY){
 			this.settings.pointVariationY = diff.pointVariationY;
-
+			
+			gl.useProgram(this.triangleShaderProgram);
 			const uPointVariationY = gl.getUniformLocation(this.triangleShaderProgram, "uPointVariationY");
 			gl.uniform1f(uPointVariationY, this.settings.pointVariationY!);
 		}
@@ -398,7 +401,8 @@ export default class ThpaceGL extends ThpaceBase{
 		// Case: pointAnimationSpeed - Also trivial
 		if(diff.pointAnimationSpeed){
 			this.settings.pointAnimationSpeed = diff.pointAnimationSpeed;
-
+			
+			gl.useProgram(this.triangleShaderProgram);
 			const uPointAnimationSpeed = gl.getUniformLocation(this.triangleShaderProgram, "uPointAnimationSpeed");
 			gl.uniform1f(uPointAnimationSpeed, this.settings.pointAnimationSpeed!);
 		}
@@ -409,7 +413,8 @@ export default class ThpaceGL extends ThpaceBase{
 		// Case: animationOffset - Trivial
 		if(diff.animationOffset){
 			this.settings.animationOffset = diff.animationOffset;
-
+			
+			gl.useProgram(this.triangleShaderProgram);
 			const uAnimationOffset = gl.getUniformLocation(this.triangleShaderProgram, "uAnimationOffset");
 			gl.uniform1f(uAnimationOffset, this.settings.animationOffset!);
 		}
