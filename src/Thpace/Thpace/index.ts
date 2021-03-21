@@ -88,15 +88,15 @@ export default class Thpace extends ThpaceBase{
 		const triangleSize = this.settings.triangleSize!;
 		const bleed = this.settings.bleed!;
 
-		for(let x = -bleed; x < this.dim.width + bleed; x+= triangleSize){
-			for(let y = -bleed; y < this.dim.height + bleed; y += triangleSize){
+		for(let x = -bleed; x < this.dim.width + (bleed*2); x+= triangleSize){
+			for(let y = -bleed; y < this.dim.height + (bleed*2); y += triangleSize){
 				this.points.push({
 					initX: x,
 					initY: y,
 					x,
 					y,
-					xNoise: getRandomNumber(0,1),
-					yNoise: getRandomNumber(0,1)
+					xNoise: getRandomNumber(-0.5,0.5),
+					yNoise: getRandomNumber(-0.5,0.5)
 				})
 			}
 		}

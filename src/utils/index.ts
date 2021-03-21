@@ -141,9 +141,9 @@ const cssColors = {
 	white: "#ffffff",
 	whitesmoke: "#f5f5f5",
 	yellow: "#ffff00",
-	yellowgreen: "#9acd32"
+	yellowgreen: "#9acd32",
 } as {
-	[key: string]: string
+	[key: string]: string;
 };
 
 const rgb = /rgb\((\d{1,3}),\s*(\d{1,3}),\s*(\d{1,3})\)/;
@@ -166,43 +166,39 @@ export function parseColor(color: string): Array<number> {
 		match = color
 			.match(rgb)!
 			.slice(1, 4)
-			.map(num => parseInt(num));
+			.map((num) => parseInt(num));
 		return [match[0], match[1], match[2], 1];
 	} else if (color.match(rgba)) {
 		match = color
 			.match(rgba)!
 			.slice(1, 5)
-			.map(num => parseFloat(num));
+			.map((num) => parseFloat(num));
 		return [match[0], match[1], match[2], match[3]];
 	} else if (color.match(hsl)) {
 		match = color
 			.match(hsl)!
 			.slice(1, 4)
-			.map(num => parseInt(num));
+			.map((num) => parseInt(num));
 
 		return [...hslToRgb(match[0], match[1], match[2]), 1];
 	} else if (color.match(hsla)) {
 		match = color
 			.match(hsla)!
 			.slice(1, 5)
-			.map(num => parseFloat(num));
-			return [...hslToRgb(match[0], match[1], match[2]), match[3]];
-	}
-	else if(color.match(hex)){
+			.map((num) => parseFloat(num));
+		return [...hslToRgb(match[0], match[1], match[2]), match[3]];
+	} else if (color.match(hex)) {
 		return [...hexToRgb(color), 1];
-	}
-	else if(typeof color === 'string'){
+	} else if (typeof color === "string") {
 		let css = cssColors[color];
-		if(css !== undefined){
-			return [...hexToRgb(css), 1]; 
+		if (css !== undefined) {
+			return [...hexToRgb(css), 1];
+		} else {
+			return [0, 0, 0, 0];
 		}
-		else{
-			return [0,0,0,0];
-		}
-	}
-	else{
+	} else {
 		console.warn(`I have no idea what "${color} is."`);
-		return [0,0,0,0];
+		return [0, 0, 0, 0];
 	}
 }
 
@@ -240,7 +236,7 @@ export function hslToRgb(h: number, s: number, l: number): Array<number> {
 		return [
 			Math.round(hueToRgb(p, q, h + 1 / 3) * 255),
 			Math.round(hueToRgb(p, q, h) * 255),
-			Math.round(hueToRgb(p, q, h - 1 / 3) * 255)
+			Math.round(hueToRgb(p, q, h - 1 / 3) * 255),
 		];
 	}
 }
@@ -250,22 +246,20 @@ export function hslToRgb(h: number, s: number, l: number): Array<number> {
  * @param color - The hex color
  * @returns The RGB representation
  */
-export function hexToRgb(color:string):Array<number> {
+export function hexToRgb(color: string): Array<number> {
 	const result = hex.exec(color);
 
-	if(result){
+	if (result) {
 		return [
 			parseInt(result[1], 16),
 			parseInt(result[2], 16),
-			parseInt(result[3], 16)
-	  ]
-	}
-	else{
+			parseInt(result[3], 16),
+		];
+	} else {
 		console.warn(`Invalid hex used: ${color}`);
-		return [0,0,0];
+		return [0, 0, 0];
 	}
 }
-
 
 /**
  * @description Convert color string of any type to RGBA string
@@ -288,8 +282,12 @@ export function getRGBA(color: string): string {
  * @param int Specifies whether the value returned should be an integer
  * @returns Random number between min and max
  */
-export function getRandomNumber(min: number, max: number, int: boolean = false) {
-	if(int){
+export function getRandomNumber(
+	min: number,
+	max: number,
+	int: boolean = false
+) {
+	if (int) {
 		return Math.floor(Math.random() * (max - min + 1)) + min;
 	}
 	return Math.random() * (max - min) + min;
@@ -301,11 +299,11 @@ export function getRandomNumber(min: number, max: number, int: boolean = false) 
  * @param b The new object
  * @returns Object containing the different entries
  */
-export function objectDiff<T>(a: T, b: T){
-	let diff: {[key: string]: any} = {};
+export function objectDiff<T>(a: T, b: T) {
+	let diff: { [key: string]: any } = {};
 	Object.entries(b).forEach(([key, value]) => {
 		// @ts-ignore
-		if(a[key] !== value) diff[key] = value;
+		if (a[key] !== value) diff[key] = value;
 	});
 	return diff;
 }
@@ -344,22 +342,22 @@ export function gradient(
 		match = color
 			.match(rgb)!
 			.slice(1, 4)
-			.map((num:any) => parseInt(num));
+			.map((num: any) => parseInt(num));
 
-		if(returnString) return `rgba(${match[0]}, ${match[1]}, ${match[2]}, 1)`;
+		if (returnString) return `rgba(${match[0]}, ${match[1]}, ${match[2]}, 1)`;
 		return [match[0], match[1], match[2], 1];
-
 	} else if (color.match(rgba)) {
 		match = color
 			.match(rgba)!
 			.slice(1, 5)
-			.map((num:any) => parseFloat(num));
+			.map((num: any) => parseFloat(num));
 
-		if(returnString) return `rgba(${match[0]}, ${match[1]}, ${match[2]}, ${match[3]})`;
+		if (returnString)
+			return `rgba(${match[0]}, ${match[1]}, ${match[2]}, ${match[3]})`;
 		return [match[0], match[1], match[2], match[3]];
 	} else {
-		if(returnString) return `rgba(0,0,0,0)`;
-		return [0,0,0,0];
+		if (returnString) return `rgba(0,0,0,0)`;
+		return [0, 0, 0, 0];
 	}
 }
 
@@ -370,5 +368,19 @@ export function gradient(
  * @returns Float rounded to the specified decimal place
  */
 export function round(value: number, decimals: number) {
-	return Number(Math.round(+(value+'e'+decimals))+'e-'+decimals);
+	return Number(Math.round(+(value + "e" + decimals)) + "e-" + decimals);
+}
+
+/**
+ * @description Function to flatten an array of arrays
+ * @param arr Array to flatten
+ */
+export function flattenArray(arr: any[]) {
+	let flat = [];
+	for (let i = 0; i < arr.length; i++) {
+		let current = arr[i];
+		for (let j = 0; j < arr.length - 1; j++)
+		flat.push(current[j]);
+	}
+	return flat;
 }

@@ -1,11 +1,30 @@
 
-export function draw(gl: WebGLRenderingContext, program: WebGLProgram, verticeCount: number){
+export function drawTriangles(gl: WebGLRenderingContext, program: WebGLProgram, bindBuffers: Function, verticeCount: number){
+	bindBuffers();
+	gl.useProgram(program);
 
 	// our shader needs the current time value for some calculations
 	const uTime = gl.getUniformLocation(program, "uTime");
 	gl.uniform1f(uTime, performance.now());
 
+	const uResolution = gl.getUniformLocation(program, "uResolution");
+	gl.uniform2f(uResolution, gl.canvas.width, gl.canvas.height);
+
 	gl.drawArrays(gl.TRIANGLES, 0, verticeCount);
+}
+
+export function drawParticles(gl: WebGLRenderingContext, program: WebGLProgram, bindBuffers: Function, particleCount: number){
+	bindBuffers();
+	gl.useProgram(program);
+
+	// our shader needs the current time value for some calculations
+	const uTime = gl.getUniformLocation(program, "uTime");
+	gl.uniform1f(uTime, performance.now());
+
+	const uResolution = gl.getUniformLocation(program, "uResolution");
+	gl.uniform2f(uResolution, gl.canvas.width, gl.canvas.height);
+
+	gl.drawArrays(gl.POINTS, 0, particleCount);
 }
 
 export function initShaderProgram(gl: WebGLRenderingContext, vsSource: string, fsSource: string){

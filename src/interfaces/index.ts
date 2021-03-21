@@ -135,3 +135,20 @@ export interface Settings {
 	/** Noise for the y axis */
 	yNoise: number;
 }
+
+export interface triangleVerticeData{
+	colors: number[];
+	noisedPoints: [number, number][];
+	indices: Uint32Array;
+	vertices: number[];
+	noise: number[];
+}
+
+export interface particlePointData{
+	points: number[],
+	interval: number[],
+	radius: number[],
+	opacity: number[],
+	variationX: number[],
+	variationY: number[],
+}

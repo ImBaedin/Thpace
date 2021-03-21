@@ -73,13 +73,13 @@
 
 			const settings = {
 				triangleSize: 90,
-				colors: ['#4CB1EF', '#424959', '#FF4B44'],
+				colors: ['#edb55a', '#b35656', '#681884'],
 				maxFps: 144,
 				particleSettings: {}
 			};
 			
-			backboi = Thpace.create(canvas, settings);
-			// backboi = ThpaceGL.create(canvas, settings);
+			// backboi = Thpace.create(canvas, settings);
+			backboi = ThpaceGL.create(canvas, settings);
 			backboi.debug();
 			//Easy
 
@@ -206,9 +206,36 @@
 			});
 
 			let pointVariationX = triangleSettings.add(backboi.settings, 'pointVariationX', 0, 50);
+			pointVariationX.onChange(function(value){
+				backboi.updateSettings({
+					pointVariationX: value,
+					force: true
+				});
+			});
+
 			let pointVariationY = triangleSettings.add(backboi.settings, 'pointVariationY', 0, 50);
+			pointVariationY.onChange(function(value){
+				backboi.updateSettings({
+					pointVariationY: value,
+					force: true
+				});
+			});
+
 			let pointAnimationSpeed = triangleSettings.add(backboi.settings, 'pointAnimationSpeed', 500, 20000);
+			pointAnimationSpeed.onChange(function(value){
+				backboi.updateSettings({
+					pointAnimationSpeed: value,
+					force: true
+				});
+			});
+
 			let animationOffset = triangleSettings.add(backboi.settings, 'animationOffset', 1, 1000);
+			animationOffset.onChange(function(value){
+				backboi.updateSettings({
+					animationOffset: value,
+					force: true
+				});
+			});
 
 			let particleSettings = gui.addFolder('Particles');
 
