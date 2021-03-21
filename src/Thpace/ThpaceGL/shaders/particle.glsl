@@ -26,7 +26,7 @@ void main() {
 
 	gl_Position = vec4(pos * vec2(1, -1), 0, 1);
 
-	gl_PointSize = aRadius * 2.0;
+	gl_PointSize = aRadius * 3.0;
 
 	vOpacity = aOpacity;
 }

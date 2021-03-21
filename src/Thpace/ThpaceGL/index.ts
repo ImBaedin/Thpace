@@ -68,7 +68,7 @@ export default class ThpaceGL extends ThpaceBase{
 		this.particleCount = 0;
 
 		// Get the webgl context for the canvas
-		this.gl = <WebGLRenderingContext>canvas.getContext("webgl");
+		this.gl = <WebGLRenderingContext>canvas.getContext("webgl", { alpha: false });
 		const gl = this.gl;
 		gl.getExtension('GL_OES_standard_derivatives');
         gl.getExtension('OES_standard_derivatives');
@@ -136,7 +136,6 @@ export default class ThpaceGL extends ThpaceBase{
 		this.triangleVerticeData.indices = indices;
 
 		this.calculateColors();
-		const colors = this.triangleVerticeData.colors;
 		
 		for(let i = 0; i < indices.length; i++){
 			let xInd = indices[i]*2;
@@ -199,6 +198,14 @@ export default class ThpaceGL extends ThpaceBase{
 				newData.opacity.push(opacity);
 			}
 		}
+
+		// particle color:
+		const uColor = this.gl.getUniformLocation(this.particleShaderProgram, "uColor");
+		const c = parseColor(this.settings.particleSettings?.color!).map((v, ind)=>{
+			if((ind+1) % 4 !== 0) return v/255;
+			return v;
+		});;
+		this.gl.uniform3f(uColor, c[0], c[1], c[2]);
 
 		this.particlePointData = newData;
 		this.particleCount = newData.points.length/2;
@@ -288,12 +295,6 @@ export default class ThpaceGL extends ThpaceBase{
 
 		// generate the particles
 		this.particulate();
-
-		// particle color:
-		const uColor = gl.getUniformLocation(this.particleShaderProgram, "uColor");
-		const c = parseColor(this.settings.particleSettings?.color!);
-		gl.uniform3f(uColor, c[0], c[1], c[2]);
-
 
 		this.resume();
 	}
@@ -439,6 +440,17 @@ export default class ThpaceGL extends ThpaceBase{
 		if(diff.particleSettings){
 			diff = diff.particleSettings;
 			this.settings.particleSettings = Object.assign({}, this.settings.particleSettings!, diff);
+
+			if(diff.color){
+				const uColor = gl.getUniformLocation(this.particleShaderProgram, "uColor");
+				const c = parseColor(this.settings.particleSettings?.color!).map((v, ind)=>{
+					if((ind+1) % 4 !== 0) return v/255;
+					return v;
+				});;
+				gl.uniform3f(uColor, c[0], c[1], c[2]);
+				return;
+			}
+
 			this.particulate();
 		}
 	}
