@@ -19,5 +19,4 @@ jobs:
               run: |
                   npm install
                   npm run build --if-present
-                  npm run build-ts --if-present
                   # npm test
