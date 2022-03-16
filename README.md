@@ -25,9 +25,9 @@ Then, you can import:
 ## Ok but like what code do I write to use it?
 
 ```js
-import Thpace from 'thpace';
+import { ThpaceGL } from 'thpace';
 // or
-const Thpace = require('thpace');
+const { ThpaceGL } = require('thpace');
 // or, if you used the CDN, skip those
 
 const canvas = document.querySelector('#make-me-cool');
@@ -37,7 +37,7 @@ const settings = {
 	triangleSize: 100,
 };
 
-Thpace.create(canvas, settings);
+ThpaceGL.create(canvas, settings);
 ```
 
 # Some Info
