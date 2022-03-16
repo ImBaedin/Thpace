@@ -1,10 +1,10 @@
 import Delaunator from 'delaunator';
 
-import ThpaceBase from '../ThpaceBase';
+import ThpaceBase from 'Thpace/ThpaceBase';
 
-import { getRGBA, getRandomNumber, objectDiff, gradient, round, parseColor } from '../../utils';
-import { Point, Settings } from '../../interfaces';
-import { defaultParticleSettings, defaultSettings } from '../../defaultSettings';
+import { getRGBA, getRandomNumber, objectDiff, gradient, round, parseColor } from 'utils';
+import { Point, Settings } from 'interfaces';
+import { defaultParticleSettings, defaultSettings } from 'defaultSettings';
 
 /**
  * @description Use static method 'create' to create a thpace instance.

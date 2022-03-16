@@ -2,20 +2,14 @@ import Delaunator from 'delaunator';
 
 // @ts-ignore
 import triangleShader from './shaders/triangle.glsl';
+// @ts-ignore
 import particleShader from './shaders/particle.glsl';
 import { initShaderProgram, parseShader, drawTriangles, drawParticles } from './WebGL';
 
 import ThpaceBase from '../ThpaceBase';
-import {
-	objectDiff,
-	getRandomNumber,
-	gradient,
-	getRGBA,
-	flattenArray,
-	parseColor,
-} from '../../utils';
-import { particlePointData, Settings, triangleVerticeData } from '../../interfaces';
-import { defaultParticleSettings, defaultSettings } from '../../defaultSettings';
+import { objectDiff, getRandomNumber, gradient, getRGBA, parseColor } from 'utils';
+import { particlePointData, Settings, triangleVerticeData } from 'interfaces';
+import { defaultParticleSettings, defaultSettings } from 'defaultSettings';
 
 export default class ThpaceGL extends ThpaceBase {
 	gl: WebGLRenderingContext;
@@ -238,14 +232,15 @@ export default class ThpaceGL extends ThpaceBase {
 				y: (p1[1] + p2[1] + p3[1]) / 3,
 			};
 
-			//@ts-ignore
-			const color = gradient(
-				center.x,
-				center.y,
-				this.dim.width,
-				this.dim.height,
-				this.settings.colors!,
-				false,
+			const color = (
+				gradient(
+					center.x,
+					center.y,
+					this.dim.width,
+					this.dim.height,
+					this.settings.colors!,
+					false,
+				) as number[]
 			).map((v, ind) => {
 				if ((ind + 1) % 4 !== 0) return v / 255;
 				return v;

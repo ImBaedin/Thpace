@@ -1,6 +1,7 @@
 import babel from 'rollup-plugin-babel';
 import resolve from '@rollup/plugin-node-resolve';
 import commonjs from '@rollup/plugin-commonjs';
+import typescript from 'rollup-plugin-typescript2';
 import { string } from 'rollup-plugin-string';
 import { terser } from 'rollup-plugin-terser';
 
@@ -23,6 +24,7 @@ export default [
 		string({ include: '**/*.glsl' }),
 		resolve({ extensions }),
 		commonjs(),
+		typescript(),
 		babel({ extensions, include: ['src/**/*'] }),
 	]),
 	config('thpace.min.js', [
@@ -30,6 +32,7 @@ export default [
 		string({ include: '**/*.glsl' }),
 		resolve({ extensions }),
 		commonjs(),
+		typescript(),
 		babel({ extensions, include: ['src/**/*'] }),
 	]),
 	config('./docs/thpace.min.js', [
@@ -37,6 +40,7 @@ export default [
 		string({ include: '**/*.glsl' }),
 		resolve({ extensions }),
 		commonjs(),
+		typescript(),
 		babel({ extensions, include: ['src/**/*'] }),
 	]),
 ];
