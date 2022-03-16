@@ -1,33 +1,42 @@
-
-export function drawTriangles(gl: WebGLRenderingContext, program: WebGLProgram, bindBuffers: Function, verticeCount: number){
+export function drawTriangles(
+	gl: WebGLRenderingContext,
+	program: WebGLProgram,
+	bindBuffers: Function,
+	verticeCount: number,
+) {
 	bindBuffers();
 	gl.useProgram(program);
 
 	// our shader needs the current time value for some calculations
-	const uTime = gl.getUniformLocation(program, "uTime");
+	const uTime = gl.getUniformLocation(program, 'uTime');
 	gl.uniform1f(uTime, performance.now());
 
-	const uResolution = gl.getUniformLocation(program, "uResolution");
+	const uResolution = gl.getUniformLocation(program, 'uResolution');
 	gl.uniform2f(uResolution, gl.canvas.width, gl.canvas.height);
 
 	gl.drawArrays(gl.TRIANGLES, 0, verticeCount);
 }
 
-export function drawParticles(gl: WebGLRenderingContext, program: WebGLProgram, bindBuffers: Function, particleCount: number){
+export function drawParticles(
+	gl: WebGLRenderingContext,
+	program: WebGLProgram,
+	bindBuffers: Function,
+	particleCount: number,
+) {
 	bindBuffers();
 	gl.useProgram(program);
 
 	// our shader needs the current time value for some calculations
-	const uTime = gl.getUniformLocation(program, "uTime");
+	const uTime = gl.getUniformLocation(program, 'uTime');
 	gl.uniform1f(uTime, performance.now());
 
-	const uResolution = gl.getUniformLocation(program, "uResolution");
+	const uResolution = gl.getUniformLocation(program, 'uResolution');
 	gl.uniform2f(uResolution, gl.canvas.width, gl.canvas.height);
 
 	gl.drawArrays(gl.POINTS, 0, particleCount);
 }
 
-export function initShaderProgram(gl: WebGLRenderingContext, vsSource: string, fsSource: string){
+export function initShaderProgram(gl: WebGLRenderingContext, vsSource: string, fsSource: string) {
 	const vertexShader = loadShader(gl, gl.VERTEX_SHADER, vsSource);
 	const fragmentShader = loadShader(gl, gl.FRAGMENT_SHADER, fsSource);
 
@@ -36,7 +45,7 @@ export function initShaderProgram(gl: WebGLRenderingContext, vsSource: string, f
 	gl.attachShader(shaderProgram, fragmentShader);
 	gl.linkProgram(shaderProgram);
 
-	if(!gl.getProgramParameter(shaderProgram, gl.LINK_STATUS)){
+	if (!gl.getProgramParameter(shaderProgram, gl.LINK_STATUS)) {
 		gl.deleteProgram(shaderProgram);
 		throw new Error(<string>gl.getProgramInfoLog(shaderProgram));
 	}
@@ -44,13 +53,17 @@ export function initShaderProgram(gl: WebGLRenderingContext, vsSource: string, f
 	return shaderProgram;
 }
 
-export default function loadShader(gl: WebGLRenderingContext, type: number, source: string): WebGLShader{
+export default function loadShader(
+	gl: WebGLRenderingContext,
+	type: number,
+	source: string,
+): WebGLShader {
 	const shader: WebGLShader = <WebGLShader>gl.createShader(type);
 
 	gl.shaderSource(shader, source);
 	gl.compileShader(shader);
 
-	if(!gl.getShaderParameter(shader, gl.COMPILE_STATUS)){
+	if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
 		const err = <string>gl.getShaderInfoLog(shader);
 		gl.deleteShader(shader);
 		throw new Error(err);
@@ -59,24 +72,24 @@ export default function loadShader(gl: WebGLRenderingContext, type: number, sour
 	return shader;
 }
 
-export function parseShader(shader: string): [string, string]{
+export function parseShader(shader: string): [string, string] {
 	let lines = shader.split('\n');
 
 	let source: [string[], string[]] = [[], []];
 
-	let type: null|number = null;
-	lines.forEach(l=>{
-		if(l.includes('#shader')){
-			if(l.includes('vertex')) type = 0;
-			if(l.includes('fragment')) type = 1;
+	let type: null | number = null;
+	lines.forEach((l) => {
+		if (l.includes('#shader')) {
+			if (l.includes('vertex')) type = 0;
+			if (l.includes('fragment')) type = 1;
 			return;
 		}
 
-		if(type !== null){
+		if (type !== null) {
 			source[type].push(l);
 		}
 	});
 
 	//@ts-ignore
-	return source.map((el: string[])=> el.join('\n'));
+	return source.map((el: string[]) => el.join('\n'));
 }

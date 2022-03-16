@@ -34,7 +34,6 @@ export interface ParticleSettings {
 	 * @description Variation of the particles on the y axis. Can be a specific number or an array that defines a range.
 	 */
 	variationY?: number | Array<number>;
-
 }
 
 export interface Settings {
@@ -75,7 +74,7 @@ export interface Settings {
 	 * @description How much the points should shift on the x-axis (px).
 	 * */
 	pointVariationX?: number;
-	/** 
+	/**
 	 * @default 35
 	 * @description How much the points should shift on the y-axis (px).
 	 * */
@@ -89,12 +88,12 @@ export interface Settings {
 	 * @default -1
 	 * @description Maximum amount of re-renders per second. -1 for unlimited. (number).
 	 */
-	maxFps?: number,
+	maxFps?: number;
 	/**
 	 * @default 250
 	 * @description The offset of the animation from left to right (number).
 	 */
-	animationOffset?: number,
+	animationOffset?: number;
 	/**
 	 * @deprecated It will work, but causes major slowdowns.
 	 * @default undefined
@@ -103,7 +102,7 @@ export interface Settings {
 	/**
 	 * @deprecated It will work, but causes major slowdowns.
 	 * @default .4
-	 * @description Overlay image opacity. 
+	 * @description Overlay image opacity.
 	 * */
 	imageOpacity?: number;
 	/**
@@ -121,11 +120,11 @@ export interface Settings {
 /**
  * @description Interface for Thpace points
  * */
- export interface Point {
+export interface Point {
 	/** Initial x coordinate */
-	initX: number,
+	initX: number;
 	/** Initial y coordinate */
-	initY: number,
+	initY: number;
 	/** x coordinate */
 	x: number;
 	/** y coordinate */
@@ -136,7 +135,7 @@ export interface Settings {
 	yNoise: number;
 }
 
-export interface triangleVerticeData{
+export interface triangleVerticeData {
 	colors: number[];
 	noisedPoints: [number, number][];
 	indices: Uint32Array;
@@ -144,11 +143,11 @@ export interface triangleVerticeData{
 	noise: number[];
 }
 
-export interface particlePointData{
-	points: number[],
-	interval: number[],
-	radius: number[],
-	opacity: number[],
-	variationX: number[],
-	variationY: number[],
+export interface particlePointData {
+	points: number[];
+	interval: number[];
+	radius: number[];
+	opacity: number[];
+	variationX: number[];
+	variationY: number[];
 }

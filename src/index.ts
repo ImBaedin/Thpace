@@ -1,6 +1,3 @@
-import {Thpace, ThpaceGL} from './Thpace';
+import { Thpace, ThpaceGL } from './Thpace';
 
-export {
-	Thpace,
-	ThpaceGL
-}
+export { Thpace, ThpaceGL };

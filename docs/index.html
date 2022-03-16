@@ -29,7 +29,7 @@
 				height: 100%;
 				width: 100%;
 			}
-			#overlay{
+			#overlay {
 				position: absolute;
 				left: 0;
 				top: 0;
@@ -66,7 +66,7 @@
 		</div>
 		<script src="https://unpkg.com/dat.gui" crossorigin="anonymous"></script>
 		<script src="./thpace.min.js"></script>
-		
+
 		<script>
 			const canvas = document.getElementById('background');
 			let backboi;
@@ -75,9 +75,9 @@
 				triangleSize: 90,
 				colors: ['#edb55a', '#b35656', '#681884'],
 				maxFps: 144,
-				particleSettings: {}
+				particleSettings: {},
 			};
-			
+
 			// backboi = Thpace.create(canvas, settings);
 			backboi = ThpaceGL.create(canvas, settings);
 			backboi.debug();
@@ -85,155 +85,191 @@
 
 			const gui = new dat.GUI();
 
-			
 			const guiSettings = {
-				updateColor: function(num, color){
+				updateColor: function (num, color) {
 					let colors = backboi.settings.colors.slice();
 					colors[num] = color;
 					backboi.updateSettings({
-						colors: colors
+						colors: colors,
 					});
 				},
 				// Triangles
-				get color1(){
-					return '#'+rgbaToHex(backboi.settings.colors[0]).slice(0,6);
+				get color1() {
+					return '#' + rgbaToHex(backboi.settings.colors[0]).slice(0, 6);
 				},
-				set color1(value){
+				set color1(value) {
 					this.updateColor(0, value);
 				},
-				get color2(){
-					return '#'+rgbaToHex(backboi.settings.colors[1]).slice(0,6);
+				get color2() {
+					return '#' + rgbaToHex(backboi.settings.colors[1]).slice(0, 6);
 				},
-				set color2(value){
+				set color2(value) {
 					this.updateColor(1, value);
 				},
-				get color3(){
-					return '#'+rgbaToHex(backboi.settings.colors[2]).slice(0,6);
+				get color3() {
+					return '#' + rgbaToHex(backboi.settings.colors[2]).slice(0, 6);
 				},
-				set color3(value){
+				set color3(value) {
 					this.updateColor(2, value);
 				},
 				// Particles
-				updateRange: function(type, entry, value){
+				updateRange: function (type, entry, value) {
 					let setting = backboi.settings.particleSettings[type].slice();
 					setting[entry] = value;
 					let particleSettings = {};
 					particleSettings[type] = setting;
 					backboi.updateSettings({
-						particleSettings: particleSettings
+						particleSettings: particleSettings,
 					});
 				},
-				get countMin(){return backboi.settings.particleSettings.count[0]},
-				get countMax(){return backboi.settings.particleSettings.count[1]},
-				set countMin(value){
+				get countMin() {
+					return backboi.settings.particleSettings.count[0];
+				},
+				get countMax() {
+					return backboi.settings.particleSettings.count[1];
+				},
+				set countMin(value) {
 					this.updateRange('count', 0, value);
 				},
-				set countMax(value){
+				set countMax(value) {
 					this.updateRange('count', 1, value);
 				},
-				get intervalMin(){return backboi.settings.particleSettings.interval[0]},
-				get intervalMax(){return backboi.settings.particleSettings.interval[1]},
-				set intervalMin(value){
+				get intervalMin() {
+					return backboi.settings.particleSettings.interval[0];
+				},
+				get intervalMax() {
+					return backboi.settings.particleSettings.interval[1];
+				},
+				set intervalMin(value) {
 					this.updateRange('interval', 0, value);
 				},
-				set intervalMax(value){
+				set intervalMax(value) {
 					this.updateRange('interval', 1, value);
 				},
-				get radiusMin(){return backboi.settings.particleSettings.radius[0]},
-				get radiusMax(){return backboi.settings.particleSettings.radius[1]},
-				set radiusMin(value){
+				get radiusMin() {
+					return backboi.settings.particleSettings.radius[0];
+				},
+				get radiusMax() {
+					return backboi.settings.particleSettings.radius[1];
+				},
+				set radiusMin(value) {
 					this.updateRange('radius', 0, value);
 				},
-				set radiusMax(value){
+				set radiusMax(value) {
 					this.updateRange('radius', 1, value);
 				},
-				get opacityMin(){return backboi.settings.particleSettings.opacity[0]},
-				get opacityMax(){return backboi.settings.particleSettings.opacity[1]},
-				set opacityMin(value){
+				get opacityMin() {
+					return backboi.settings.particleSettings.opacity[0];
+				},
+				get opacityMax() {
+					return backboi.settings.particleSettings.opacity[1];
+				},
+				set opacityMin(value) {
 					this.updateRange('opacity', 0, value);
 				},
-				set opacityMax(value){
+				set opacityMax(value) {
 					this.updateRange('opacity', 1, value);
 				},
-				get variationXMin(){return backboi.settings.particleSettings.variationX[0]},
-				get variationXMax(){return backboi.settings.particleSettings.variationX[1]},
-				set variationXMin(value){
+				get variationXMin() {
+					return backboi.settings.particleSettings.variationX[0];
+				},
+				get variationXMax() {
+					return backboi.settings.particleSettings.variationX[1];
+				},
+				set variationXMin(value) {
 					this.updateRange('variationX', 0, value);
 				},
-				set variationXMax(value){
+				set variationXMax(value) {
 					this.updateRange('variationX', 1, value);
 				},
-				get variationYMin(){return backboi.settings.particleSettings.variationY[0]},
-				get variationYMax(){return backboi.settings.particleSettings.variationY[1]},
-				set variationYMin(value){
+				get variationYMin() {
+					return backboi.settings.particleSettings.variationY[0];
+				},
+				get variationYMax() {
+					return backboi.settings.particleSettings.variationY[1];
+				},
+				set variationYMin(value) {
 					this.updateRange('variationY', 0, value);
 				},
-				set variationYMax(value){
+				set variationYMax(value) {
 					this.updateRange('variationY', 1, value);
 				},
-				get color(){return backboi.settings.particleSettings.color},
-				set color(value){backboi.updateSettings({particleSettings: { color: value}})}
+				get color() {
+					return backboi.settings.particleSettings.color;
+				},
+				set color(value) {
+					backboi.updateSettings({ particleSettings: { color: value } });
+				},
 			};
 
 			let triangleSettings = gui.addFolder('Triangles');
-
 
 			let colors = triangleSettings.addFolder('Colors');
 			let color1 = colors.addColor(guiSettings, 'color1');
 			let color2 = colors.addColor(guiSettings, 'color2');
 			let color3 = colors.addColor(guiSettings, 'color3');
 
-			let triangleSize= triangleSettings.add(backboi.settings, 'triangleSize', 10, 150);
-			triangleSize.onChange(function(value){
+			let triangleSize = triangleSettings.add(backboi.settings, 'triangleSize', 10, 150);
+			triangleSize.onChange(function (value) {
 				backboi.updateSettings({
 					triangleSize: value,
-					force: true
+					force: true,
 				});
 			});
 			let bleed = triangleSettings.add(backboi.settings, 'bleed', -50, 150);
-			bleed.onChange(function(value){
+			bleed.onChange(function (value) {
 				backboi.updateSettings({
 					bleed: value,
-					force: true
+					force: true,
 				});
 			});
 			let noise = triangleSettings.add(backboi.settings, 'noise', -100, 100);
-			noise.onChange(function(value){
+			noise.onChange(function (value) {
 				backboi.updateSettings({
 					noise: value,
-					force: true
+					force: true,
 				});
 			});
 
 			let pointVariationX = triangleSettings.add(backboi.settings, 'pointVariationX', 0, 50);
-			pointVariationX.onChange(function(value){
+			pointVariationX.onChange(function (value) {
 				backboi.updateSettings({
 					pointVariationX: value,
-					force: true
+					force: true,
 				});
 			});
 
 			let pointVariationY = triangleSettings.add(backboi.settings, 'pointVariationY', 0, 50);
-			pointVariationY.onChange(function(value){
+			pointVariationY.onChange(function (value) {
 				backboi.updateSettings({
 					pointVariationY: value,
-					force: true
+					force: true,
 				});
 			});
 
-			let pointAnimationSpeed = triangleSettings.add(backboi.settings, 'pointAnimationSpeed', 500, 20000);
-			pointAnimationSpeed.onChange(function(value){
+			let pointAnimationSpeed = triangleSettings.add(
+				backboi.settings,
+				'pointAnimationSpeed',
+				500,
+				20000,
+			);
+			pointAnimationSpeed.onChange(function (value) {
 				backboi.updateSettings({
 					pointAnimationSpeed: value,
-					force: true
+					force: true,
 				});
 			});
 
-			let animationOffset = triangleSettings.add(backboi.settings, 'animationOffset', 1, 1000);
-			animationOffset.onChange(function(value){
+			let animationOffset = triangleSettings.add(
+				backboi.settings,
+				'animationOffset',
+				1,
+				1000,
+			);
+			animationOffset.onChange(function (value) {
 				backboi.updateSettings({
 					animationOffset: value,
-					force: true
+					force: true,
 				});
 			});
 
@@ -242,7 +278,7 @@
 			let count = particleSettings.addFolder('Count');
 			let countMin = count.add(guiSettings, 'countMin', 1, 5);
 			let countMax = count.add(guiSettings, 'countMax', 5, 10);
-			
+
 			let interval = particleSettings.addFolder('Interval');
 			let intervalMin = interval.add(guiSettings, 'intervalMin', 500, 5000);
 			let intervalMax = interval.add(guiSettings, 'intervalMax', 5000, 10000);
@@ -268,26 +304,27 @@
 			let maxFps = gui.add(backboi.settings, 'maxFps', 1, 144);
 
 			function rgbaToHex(orig) {
-				var a, isPercent,
+				var a,
+					isPercent,
 					rgb = orig.replace(/\s/g, '').match(/^rgba?\((\d+),(\d+),(\d+),?([^,\s)]+)?/i),
-					alpha = (rgb && rgb[4] || "").trim(),
-					hex = rgb ?
-					(rgb[1] | 1 << 8).toString(16).slice(1) +
-					(rgb[2] | 1 << 8).toString(16).slice(1) +
-					(rgb[3] | 1 << 8).toString(16).slice(1) : orig;
+					alpha = ((rgb && rgb[4]) || '').trim(),
+					hex = rgb
+						? (rgb[1] | (1 << 8)).toString(16).slice(1) +
+						  (rgb[2] | (1 << 8)).toString(16).slice(1) +
+						  (rgb[3] | (1 << 8)).toString(16).slice(1)
+						: orig;
 
-				if (alpha !== "") {
+				if (alpha !== '') {
 					a = alpha;
 				} else {
 					a = 01;
 				}
 				// multiply before convert to HEX
-				a = ((a * 255) | 1 << 8).toString(16).slice(1)
+				a = ((a * 255) | (1 << 8)).toString(16).slice(1);
 				hex = hex + a;
 
 				return hex;
 			}
-
 		</script>
 	</body>
 </html>
