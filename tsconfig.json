@@ -3,6 +3,7 @@
 		"target": "es5",
 		"module": "ES2015",
 		"declaration": true,
+		"declarationDir": "./lib",
 		"outDir": "./lib",
 		"strict": true,
 		"esModuleInterop": true,
