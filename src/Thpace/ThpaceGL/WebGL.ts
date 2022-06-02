@@ -14,7 +14,7 @@ export function drawTriangles(
 	const uResolution = gl.getUniformLocation(program, 'uResolution');
 	gl.uniform2f(uResolution, gl.canvas.width, gl.canvas.height);
 
-	gl.drawArrays(gl.TRIANGLES, 0, verticeCount);
+	gl.drawArrays(gl.TRIANGLES, 0, verticeCount / 2);
 }
 
 export function drawParticles(
