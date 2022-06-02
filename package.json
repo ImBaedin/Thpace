@@ -9,7 +9,7 @@
 	"unpkg": "thpace.min.js",
 	"scripts": {
 		"build": "rollup -c",
-		"start": "rollup -cw",
+		"start": "rollup -cw --dev",
 		"test": "mocha -r ts-node/register src/**/test.ts",
 		"build-ts": "tsc"
 	},

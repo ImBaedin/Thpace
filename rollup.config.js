@@ -19,40 +19,47 @@ const config = (file, plugins, format = 'umd') => ({
 	plugins,
 });
 
-export default [
-	config('thpace.js', [
-		string({ include: '**/*.glsl' }),
-		resolve({ extensions }),
-		commonjs(),
-		typescript({ useTsconfigDeclarationDir: true }),
-		babel({ extensions, include: ['src/**/*'] }),
-	]),
-	config('thpace.min.js', [
+export default function makeConfig(commandOptions) {
+	let docs = config('./docs/thpace.min.js', [
 		terser(),
 		string({ include: '**/*.glsl' }),
 		resolve({ extensions }),
 		commonjs(),
 		typescript({ useTsconfigDeclarationDir: true }),
 		babel({ extensions, include: ['src/**/*'] }),
-	]),
-	config('./docs/thpace.min.js', [
-		terser(),
-		string({ include: '**/*.glsl' }),
-		resolve({ extensions }),
-		commonjs(),
-		typescript({ useTsconfigDeclarationDir: true }),
-		babel({ extensions, include: ['src/**/*'] }),
-	]),
-	config(
-		'./lib/index.js',
-		[
+	]);
+
+	if (commandOptions.dev) {
+		return docs;
+	}
+	return [
+		config('thpace.js', [
+			string({ include: '**/*.glsl' }),
+			resolve({ extensions }),
+			commonjs(),
+			typescript({ useTsconfigDeclarationDir: true }),
+			babel({ extensions, include: ['src/**/*'] }),
+		]),
+		config('thpace.min.js', [
 			terser(),
 			string({ include: '**/*.glsl' }),
 			resolve({ extensions }),
 			commonjs(),
 			typescript({ useTsconfigDeclarationDir: true }),
 			babel({ extensions, include: ['src/**/*'] }),
-		],
-		'esm',
-	),
-];
+		]),
+		config(
+			'./lib/index.js',
+			[
+				terser(),
+				string({ include: '**/*.glsl' }),
+				resolve({ extensions }),
+				commonjs(),
+				typescript({ useTsconfigDeclarationDir: true }),
+				babel({ extensions, include: ['src/**/*'] }),
+			],
+			'esm',
+		),
+		docs,
+	];
+}
