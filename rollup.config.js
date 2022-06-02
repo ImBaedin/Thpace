@@ -8,11 +8,11 @@ import { terser } from 'rollup-plugin-terser';
 const extensions = ['.js', '.jsx', '.ts', '.tsx'];
 const name = 'window';
 
-const config = (file, plugins) => ({
+const config = (file, plugins, format = 'umd') => ({
 	input: './src/index.ts',
 	output: {
 		name,
-		format: 'umd',
+		format,
 		file,
 		extend: true,
 	},
@@ -24,7 +24,7 @@ export default [
 		string({ include: '**/*.glsl' }),
 		resolve({ extensions }),
 		commonjs(),
-		typescript(),
+		typescript({ useTsconfigDeclarationDir: true }),
 		babel({ extensions, include: ['src/**/*'] }),
 	]),
 	config('thpace.min.js', [
@@ -32,7 +32,7 @@ export default [
 		string({ include: '**/*.glsl' }),
 		resolve({ extensions }),
 		commonjs(),
-		typescript(),
+		typescript({ useTsconfigDeclarationDir: true }),
 		babel({ extensions, include: ['src/**/*'] }),
 	]),
 	config('./docs/thpace.min.js', [
@@ -40,7 +40,19 @@ export default [
 		string({ include: '**/*.glsl' }),
 		resolve({ extensions }),
 		commonjs(),
-		typescript(),
+		typescript({ useTsconfigDeclarationDir: true }),
 		babel({ extensions, include: ['src/**/*'] }),
 	]),
+	config(
+		'./lib/index.js',
+		[
+			terser(),
+			string({ include: '**/*.glsl' }),
+			resolve({ extensions }),
+			commonjs(),
+			typescript({ useTsconfigDeclarationDir: true }),
+			babel({ extensions, include: ['src/**/*'] }),
+		],
+		'esm',
+	),
 ];
