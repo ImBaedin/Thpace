@@ -33,7 +33,7 @@
 		"@types/mocha": "^7.0.1",
 		"@types/stats.js": "^0.17.0",
 		"chai": "^4.2.0",
-		"mocha": "^7.0.1",
+		"mocha": "^10.2.0",
 		"prettier": "^2.5.1",
 		"rollup": "^1.31.1",
 		"rollup-plugin-babel": "^4.3.3",
