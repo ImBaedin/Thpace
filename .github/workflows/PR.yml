@@ -15,8 +15,12 @@ jobs:
               with:
                   node-version: 12
                   registry-url: https://registry.npmjs.org/
-            - name: npm install, build, build-ts, and test
+            - name: Install pnpm
+              uses: pnpm/action-setup@v2
+              with:
+                  version: 8
+            - name: pnpm install, build, build-ts, and test
               run: |
-                  npm install
-                  npm run build --if-present
-                  # npm test
+                  pnpm install
+                  pnpm run build --if-present
+                  # pnpm test

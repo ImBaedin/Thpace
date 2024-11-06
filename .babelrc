@@ -1,8 +1,12 @@
 {
-	"presets": ["@babel/env", "@babel/typescript"],
+	"presets": [
+		"@babel/env",
+		"@babel/typescript"
+	],
 	"plugins": [
 		"@babel/proposal-class-properties",
 		"@babel/plugin-transform-object-assign",
-		"@babel/plugin-transform-classes"
+		"@babel/plugin-transform-classes",
+		"@babel/plugin-transform-duplicate-named-capturing-groups-regex"
 	]
 }

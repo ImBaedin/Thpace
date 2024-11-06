@@ -80,8 +80,7 @@ export default class Thpace extends ThpaceBase {
 		let screenSpace = (this.dim.height * this.dim.width) / (100 * 100);
 
 		for (let i = 0; i < screenSpace; i++) {
-			let toJ = count;
-			if (Array.isArray(count)) toJ = getRandomNumber(count[0], count[1], true);
+			let toJ = Array.isArray(count) ? getRandomNumber(count[0], count[1], true) : count;
 			for (let j = 0; j < toJ; j++) {
 				this.particles.push(new Particle(this));
 			}

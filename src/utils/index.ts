@@ -291,7 +291,7 @@ export function getRandomNumber(min: number, max: number, int: boolean = false) 
  * @param b The new object
  * @returns Object containing the different entries
  */
-export function objectDiff<T>(a: T, b: T) {
+export function objectDiff<T extends Record<string, any>>(a: T, b: T) {
 	let diff: { [key: string]: any } = {};
 	Object.entries(b).forEach(([key, value]) => {
 		// @ts-ignore

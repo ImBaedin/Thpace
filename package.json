@@ -20,11 +20,12 @@
 		"url": "git+https://github.com/ImBaedin/Thpace.git"
 	},
 	"devDependencies": {
-		"@babel/core": "^7.8.4",
+		"@babel/core": "^7.26.0",
 		"@babel/plugin-proposal-class-properties": "^7.8.3",
 		"@babel/plugin-transform-classes": "^7.9.5",
+		"@babel/plugin-transform-duplicate-named-capturing-groups-regex": "^7.25.9",
 		"@babel/plugin-transform-object-assign": "^7.8.3",
-		"@babel/preset-env": "^7.8.4",
+		"@babel/preset-env": "^7.26.0",
 		"@babel/preset-typescript": "^7.8.3",
 		"@rollup/plugin-commonjs": "^11.0.2",
 		"@rollup/plugin-node-resolve": "^7.1.1",
@@ -41,11 +42,12 @@
 		"rollup-plugin-terser": "^5.2.0",
 		"rollup-plugin-typescript2": "^0.31.2",
 		"ts-node": "^8.6.2",
-		"typescript": "^3.7.5"
+		"typescript": "^5.6.3"
 	},
 	"dependencies": {
 		"color-interpolate": "^1.0.5",
 		"delaunator": "^4.0.1",
-		"stats.js": "^0.17.0"
+		"stats.js": "^0.17.0",
+		"tslib": "^2.8.1"
 	}
 }

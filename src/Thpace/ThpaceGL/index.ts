@@ -88,7 +88,7 @@ export default class ThpaceGL extends ThpaceBase {
 		this.triangleVerticeData = {
 			colors: [],
 			noisedPoints: [],
-			indices: new Uint32Array(),
+			indices: new Uint32Array([]),
 			vertices: [],
 			noise: [],
 		};
@@ -177,8 +177,7 @@ export default class ThpaceGL extends ThpaceBase {
 		let screenSpace = (this.dim.height * this.dim.width) / (100 * 100);
 
 		for (let i = 0; i < screenSpace; i++) {
-			let toJ = count;
-			if (Array.isArray(count)) toJ = getRandomNumber(count[0], count[1], true);
+			let toJ = Array.isArray(count) ? getRandomNumber(count[0], count[1], true) : count;
 			for (let j = 0; j < toJ; j++) {
 				newData.points.push(getRandomNumber(0, dim.width), getRandomNumber(0, dim.height));
 
@@ -517,6 +516,8 @@ export default class ThpaceGL extends ThpaceBase {
 				diff,
 			);
 
+			const keyCount = Object.keys(diff).length;
+
 			if (diff.color) {
 				const uColor = gl.getUniformLocation(this.particleShaderProgram, 'uColor');
 				const c = parseColor(this.settings.particleSettings?.color!).map((v, ind) => {
@@ -524,7 +525,8 @@ export default class ThpaceGL extends ThpaceBase {
 					return v;
 				});
 				gl.uniform3f(uColor, c[0], c[1], c[2]);
-				return;
+
+				if (keyCount === 1) return;
 			}
 
 			this.particulate();
